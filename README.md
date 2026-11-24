@@ -1,36 +1,38 @@
-SISTEMA DE GESTIÓN DE VOLUNTARIADO COMUNITARIO
+# Sistema de Gestión de Voluntariado Comunitario
 
-Proyecto desarrollado en Java bajo el patrón de arquitectura Modelo-Vista-Controlador (MVC), utilizando PostgreSQL como sistema de gestión de bases de datos.
+Aplicación de escritorio desarrollada en **Java** bajo el patrón de arquitectura **Modelo-Vista-Controlador (MVC)**, utilizando **PostgreSQL** como sistema de gestión de bases de datos.
 
-1. REQUISITOS DEL SISTEMA
+---
 
-Para descargar, compilar y ejecutar este proyecto, necesitas tener instalado el siguiente software:
+## 📋 Requisitos del Sistema
 
-Java Development Kit (JDK) 17 o superior.
+Para descargar, compilar y ejecutar este proyecto, asegúrate de contar con el siguiente entorno instalado:
 
-Apache Maven (para la gestión de dependencias y compilación).
+* **Java Development Kit (JDK):** Versión 17 o superior.
+* **Apache Maven:** Para la gestión de dependencias y compilación.
+* **PostgreSQL Server:** Versión 12 o superior.
+* **IDE:** NetBeans, IntelliJ IDEA, Eclipse o VS Code con soporte para proyectos Maven.
 
-PostgreSQL Server (Versión 12 o superior).
+---
 
-NetBeans o IDE compatible con proyectos Maven.
+## 🗄️ Configuración de la Base de Datos (PostgreSQL)
 
-2. CONFIGURACIÓN DE LA BASE DE DATOS (POSTGRESQL)
+El sistema requiere una base de datos llamada `voluntariado_db`.
 
-El proyecto requiere una base de datos específica llamada voluntariado_db.
+### 1. Creación de la Base de Datos
 
-2.1. Creación de la Base de Datos
+Ejecuta la siguiente sentencia en tu cliente SQL (`pgAdmin` o terminal `psql`):
 
-Ejecuta las siguientes sentencias en tu cliente SQL (pgAdmin o terminal psql):
-
--- Crear la base de datos (si no existe)
+```sql
+-- Crear la base de datos
 CREATE DATABASE voluntariado_db;
+```
 
+### 2. Creación de Tablas y Datos Iniciales
 
+Una vez conectado a `voluntariado_db`, ejecuta el siguiente script para crear las tablas `Usuarios` y `Solicitudes` (junto con sus restricciones y claves foráneas) e insertar el usuario administrador por defecto:
 
-2.2. Script de Creación de Tablas
-
-Una vez conectado a voluntariado_db, ejecuta el siguiente script para crear las tablas Usuarios y Solicitudes (incluyendo la columna categoria y las Claves Foráneas) e insertar el usuario administrador inicial.
-
+```sql
 -- =======================================================
 -- SCRIPT DE CREACIÓN COMPLETO DE LA BASE DE DATOS
 -- =======================================================
@@ -73,30 +75,40 @@ CREATE TABLE Solicitudes (
         REFERENCES Usuarios (id)
         ON DELETE SET NULL
 );
+```
 
+> **Credenciales por defecto:** Usuario `admin` / Contraseña `admin123`
 
-3 Verificación de Dependencias (pom.xml)
+---
 
-El proyecto se basa en las siguientes dependencias Maven, necesarias para la conectividad y la generación de reportes:
+## 📦 Dependencias (`pom.xml`)
+
+El proyecto utiliza las siguientes librerías principales gestionadas por Maven:
 
 | Librería | Propósito |
-| org.postgresql:postgresql | Conexión con PostgreSQL (JDBC Driver) |
-| com.itextpdf:itextpdf | Generación de reportes PDF (iText 5) |
+| :--- | :--- |
+| `org.postgresql:postgresql` | Conexión con PostgreSQL (JDBC Driver) |
+| `com.itextpdf:itextpdf` | Generación de reportes en formato PDF (iText 5) |
 
-Asegúrate de que tu pom.xml contenga la dependencia de iText 5 para evitar errores de compilación:
+Verifica que la dependencia de **iText 5** esté declarada en tu archivo `pom.xml` para evitar errores de compilación:
 
+```xml
 <dependency>
     <groupId>com.itextpdf</groupId>
     <artifactId>itextpdf</artifactId>
     <version>5.5.13.3</version> 
 </dependency>
+```
 
+---
 
+## 🚀 Compilación y Ejecución
 
-3.3. Compilación y Ejecución
+1. **Abrir el proyecto:** Importa la carpeta raíz del proyecto (`voluntariado`) como un proyecto Maven en tu IDE de preferencia.
+2. **Instalar dependencias y compilar:** Tu IDE descargará las dependencias automáticamente, o puedes hacerlo desde la terminal en la raíz del proyecto ejecutando:
 
-Abrir Proyecto: Abre la carpeta del proyecto (voluntariado) en tu IDE (NetBeans, etc.).
-
-Descargar Dependencias: Tu IDE o Maven compilará y descargará automáticamente las dependencias. Si usas la terminal, ejecuta:
-
+```bash
 mvn clean install
+```
+
+3. **Ejecutar:** Inicia la clase principal (`Main`) desde tu IDE o mediante Maven una vez configuradas las credenciales de conexión a PostgreSQL en el código fuente.
